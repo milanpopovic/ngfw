@@ -23,7 +23,7 @@ from .app import create_app, run_app
 from .config import AppConfig
 from .pages.registry import NavItem, get_nav_items, grouped_nav_items, page
 from .shell import frame, set_dirty
-from . import auth, backup, components, i18n, webdav
+from . import auth, backup, components, i18n, tree, webdav
 
 __all__ = [
     "AppConfig",
@@ -39,7 +39,8 @@ __all__ = [
     "backup",
     "components",
     "i18n",
+    "tree",
     "webdav",
 ]
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

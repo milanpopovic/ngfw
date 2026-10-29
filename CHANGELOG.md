@@ -5,6 +5,13 @@ Svaka promena koda u `ngfw/` dobija novu verziju (`__version__` u
 Brojevi: 0.3.**1** = ispravka, bez promene upotrebe; 0.**4**.0 = nešto novo
 ili promena koja traži izmenu u aplikacijama.
 
+## 0.4.0
+- `ngfw.tree` — `TreeEditor`, stablo koje se menja direktno u prikazu, kao NiceGUI element za bilo koju
+  stranicu (iz aplikacije stabla); `JsonFileStore` / `MemoryStore` / sopstveni `TreeStore`; takođe kao
+  `ngfw.components.TreeEditor`. Isti kod kao paket `ngtree` 0.1.0 (izvor:
+  https://github.com/milanpopovic/ngtree, `bash build.sh --ngfw`). Postojeće aplikacije ne moraju ništa da menjaju.
+- `build.sh` čita aplikacije iz `apps.local` (nije u git-u).
+
 ## 0.3.0
 - Pip paket (`pyproject.toml`, `build.sh`) umesto kopiranja `ngfw/` foldera u aplikacije.
 - `ngfw.webdav`: uređivanje fajlova (Word šablona) direktno iz desktop Worda,

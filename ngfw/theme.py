@@ -31,4 +31,3 @@ def dark_mode_toggle(config: AppConfig) -> tuple[ui.dark_mode, Callable[[], None
         app.storage.user["dark_mode"] = dark.value
 
     return dark, toggle
-# x

@@ -18,7 +18,7 @@ dependencies = [
 webdav = ["wsgidav>=4.3", "a2wsgi>=1.10", "docxtpl>=0.16"]
 
 [tool.setuptools]
-packages = ["ngfw", "ngfw.auth", "ngfw.components", "ngfw.pages"]
+packages = ["ngfw", "ngfw.auth", "ngfw.components", "ngfw.pages", "ngfw.tree"]
 
 [tool.setuptools.dynamic]
 version = { attr = "ngfw.__version__" }

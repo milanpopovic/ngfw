@@ -1,4 +1,4 @@
-# ngfw (0.3.0)
+# ngfw (0.4.0)
 
 A reusable NiceGUI application framework: multipage routing + nav, auth &
 sessions, an app shell with theming, and a handful of shared UI
@@ -8,12 +8,12 @@ blank `main.py`.
 ## Install
 
 ngfw is a pip package with a version number (it is not on PyPI). Each app keeps the exact wheel it uses in
-its own `wheels/` folder and lists it in `requirements.txt` (`./wheels/ngfw-0.3.0-py3-none-any.whl`), so a
+its own `wheels/` folder and lists it in `requirements.txt` (`./wheels/ngfw-0.4.0-py3-none-any.whl`), so a
 server installs exactly that version — never something named „ngfw” from PyPI.
 
 ```bash
 # straight from GitHub (a tagged version):
-pip install "ngfw @ git+https://github.com/milanpopovic/ngfw@v0.3.0"
+pip install "ngfw @ git+https://github.com/milanpopovic/ngfw@v0.4.0"
 
 # or a wheel: download it from the GitHub release, or build it yourself —
 # edit ngfw/, raise __version__ in ngfw/__init__.py, add a CHANGELOG.md entry, then
@@ -71,8 +71,9 @@ if __name__ in {"__main__", "__mp_main__"}:
     ngfw.run_app(config)
 ```
 
-Layout: `app_config.py`, `main.py`, `pages/` and your copy of `ngfw/` all
-sit next to each other in the app's root folder. Run with `python
+Layout: `app_config.py`, `main.py` and `pages/` sit next to each other in
+the app's root folder; ngfw itself is installed from `wheels/` (never a
+copied `ngfw/` folder — main.py warns if one is left). Run with `python
 main.py`. See `examples/demo_app` for a complete, runnable version with
 auth, a protected page, and the AG Grid component.
 
@@ -273,6 +274,39 @@ Locks (so two people can't edit the same file at once) are kept in memory and
 cleared on restart. The daily `ngfw.backup` zip of the data folder includes
 the templates, so an earlier version can be restored from there.
 
+### Tree editor (`ngfw.tree`, 0.4)
+
+A tree you edit right in the tree view, as one element for any page — the editor from the *stabla* app:
+add / edit / delete / drag / up-down / sort, notes with clickable links, branch tags, filter, undo,
+import/export (.txt paths or JSON, whole tree or a subtree), view-only mode, Serbian/English.
+
+```python
+from ngfw.tree import TreeEditor, JsonFileStore, MemoryStore
+
+ORG = JsonFileStore(DATA / 'organizacija.json')        # one file per tree; created if missing
+
+@ngfw.page('/org', 'Organizacija', icon='account_tree')
+def org_page():
+    with ngfw.frame(config, '/org'):
+        TreeEditor(ORG, editable=lambda doc: ngfw.auth.is_admin(), language='sr', filename='organizacija')
+
+# your own data: you save it
+TreeEditor(MemoryStore(nodes, on_change=save_to_db), features={'add', 'edit', 'delete', 'drag'},
+           on_select=lambda node: show_details(node))
+```
+
+- **Stores:** `JsonFileStore(path)` — atomic writes, a backup before every change (undo walks back through
+  them), live updates in every browser showing the same file; `MemoryStore(nodes, on_change=...)` — your data
+  (database, app.storage…), undo in memory; subclass `TreeStore` (`_read`, `_write`) for anything else.
+- **Rights:** `editable` is a bool or `(doc) -> bool`, checked again before every change; `can_view(doc)`.
+- **Options:** `features` (`add edit delete move drag sort notes tags import export undo filter`), `language`,
+  `texts` (replace any text), `on_change`, `on_select`, `menu_extra` (your items in the ⋮ menu), `filename`,
+  `show_stats`, `hint`, `help_url`, `expand`.
+- `ngfw.tree.ops` — the same operations without UI (scripts, imports, tests).
+- Also available as `ngfw.components.TreeEditor`. The same code is the standalone package
+  [ngtree](https://github.com/milanpopovic/ngtree) (for apps without ngfw) — the source lives there and its
+  `build.sh --ngfw` copies it here. Full reference: the ngtree README.
+
 ### UI components (`ngfw.components`)
 
 - `styled_aggrid(rows, columns, groups=...)` — an AG Grid with sane
@@ -308,8 +342,7 @@ the framework itself:
   matching AG Grid >= 31 (columnApi merged into gridApi). If you're
   pinned to an older NiceGUI/AG Grid version that still needs
   `columnApi.setColumnVisible`, adjust `ngfw/components/grid.py`
-  accordingly (in your app's own copy — the shared source isn't
-  affected).
+  accordingly here, then a new version + `bash build.sh ...`.
 - **SQL-backed auth** — if an app needs Postgres-backed users instead of
   the JSON file (matching the SQLModel/asyncpg pattern from earlier
   projects), implement `ngfw.auth.UserStore` and pass it to
