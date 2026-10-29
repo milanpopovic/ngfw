@@ -37,6 +37,28 @@ Optional extra for `ngfw.webdav` (editing Word templates from desktop Word):
 
 Every version is a git tag (`v0.3.0`, `v0.4.0`, …) with its wheel attached to the GitHub release; what changed is in `CHANGELOG.md`.
 
+#### Releasing a new version
+
+```bash
+# 1. change the code, raise __version__ in ngfw/__init__.py, add "## 0.4.1" to CHANGELOG.md
+bash build.sh                                   # builds dist/ngfw-0.4.1-py3-none-any.whl (checks the CHANGELOG entry)
+
+# 2. commit, tag, push — the tag must be annotated (-a), --follow-tags pushes only annotated tags
+git add -A
+git commit -m "ngfw 0.4.1: what changed"
+git tag -a v0.4.1 -m "ngfw 0.4.1"
+git push --follow-tags
+
+# 3. GitHub release with the wheel and the CHANGELOG entry as its description
+awk '$0=="## 0.4.1"{on=1;next} /^## /{on=0} on' CHANGELOG.md > /tmp/notes.md
+gh release create v0.4.1 dist/ngfw-0.4.1-py3-none-any.whl --title "ngfw 0.4.1" --notes-file /tmp/notes.md
+
+# 4. into the apps (apps.local): bash build.sh app1 app2 … — then each app: pip install -r requirements.txt, deploy
+```
+
+Check: `git status` before step 2 must list only what you meant to change (`apps.local`, `LOCAL.md`, `dist/`
+are ignored); `git tag` and `gh release list` show what is published.
+
 ## Quickstart
 
 ```python
