@@ -1,19 +1,40 @@
-# ngfw (0.4.0)
+# ngfw (0.4.1)
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/milanpopovic/ngfw?quickstart=1)
 
 A reusable NiceGUI application framework: multipage routing + nav, auth &
 sessions, an app shell with theming, and a handful of shared UI
 components — so a new app starts from a working skeleton instead of a
 blank `main.py`.
 
+## Try it (no download)
+
+- **In the browser:** click **Open in GitHub Codespaces** above → *Create codespace*. After a minute or two the
+  demo starts by itself and opens in a new tab (if it doesn't: **Ports** tab → 8080 → 🌐). Log in as
+  **demo / demo1234**. You need a GitHub account; Codespaces is free up to a monthly limit. When done:
+  github.com/codespaces → ⋯ → *Delete*.
+- **On your computer** (Python 3.10+), one command:
+
+  ```bash
+  pipx run --spec git+https://github.com/milanpopovic/ngfw ngfw-demo        # → http://localhost:8080
+  ```
+
+  or in a virtual environment: `pip install "git+https://github.com/milanpopovic/ngfw" && ngfw-demo`.
+  Options: `--port 8090`, `--data <folder>` (default `./ngfw-demo-data`: users, the tree file, the session secret).
+
+The demo (`ngfw/demo.py`): a public home page, then behind the login an AG Grid table with column groups, the
+tree editor (`ngfw.tree`) and a settings page with form components and a confirm dialog. The tree editor alone:
+`python -m ngfw.tree.demo` (port 8098), or the [ngtree](https://github.com/milanpopovic/ngtree) repo.
+
 ## Install
 
 ngfw is a pip package with a version number (it is not on PyPI). Each app keeps the exact wheel it uses in
-its own `wheels/` folder and lists it in `requirements.txt` (`./wheels/ngfw-0.4.0-py3-none-any.whl`), so a
+its own `wheels/` folder and lists it in `requirements.txt` (`./wheels/ngfw-0.4.1-py3-none-any.whl`), so a
 server installs exactly that version — never something named „ngfw” from PyPI.
 
 ```bash
 # straight from GitHub (a tagged version):
-pip install "ngfw @ git+https://github.com/milanpopovic/ngfw@v0.4.0"
+pip install "ngfw @ git+https://github.com/milanpopovic/ngfw@v0.4.1"
 
 # or a wheel: download it from the GitHub release, or build it yourself —
 # edit ngfw/, raise __version__ in ngfw/__init__.py, add a CHANGELOG.md entry, then
@@ -97,7 +118,8 @@ Layout: `app_config.py`, `main.py` and `pages/` sit next to each other in
 the app's root folder; ngfw itself is installed from `wheels/` (never a
 copied `ngfw/` folder — main.py warns if one is left). Run with `python
 main.py`. See `examples/demo_app` for a complete, runnable version with
-auth, a protected page, and the AG Grid component.
+auth, a protected page, and the AG Grid component (the same app in one file: `ngfw/demo.py`, the
+`ngfw-demo` command).
 
 ## What's included
 

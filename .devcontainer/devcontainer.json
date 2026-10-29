@@ -1,0 +1,10 @@
+{
+  "name": "ngfw demo",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "pip install -e .",
+  "postAttachCommand": "ngfw-demo",
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": { "label": "ngfw demo", "onAutoForward": "openBrowser" }
+  }
+}

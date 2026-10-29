@@ -10,3 +10,6 @@ LOCAL.md
 # example: generated user file and an old copied ngfw/ folder
 examples/demo_app/demo_users.json
 examples/demo_app/ngfw/
+# data written by the ngfw-demo command
+ngfw-demo-data/
+ngtree-demo-data/

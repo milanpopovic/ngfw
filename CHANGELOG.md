@@ -5,6 +5,11 @@ Svaka promena koda u `ngfw/` dobija novu verziju (`__version__` u
 Brojevi: 0.3.**1** = ispravka, bez promene upotrebe; 0.**4**.0 = nešto novo
 ili promena koja traži izmenu u aplikacijama.
 
+## 0.4.1
+- Primer se pokreće direktno sa GitHub-a: komanda `ngfw-demo` (`ngfw/demo.py`: početna, tabela, stablo,
+  podešavanja, prijava demo / demo1234; `--port`, `--data`) i dugme „Open in GitHub Codespaces” (`.devcontainer/`).
+- `ngfw.tree` = ngtree 0.1.1 (i `ngfw.tree.demo`). Aplikacije ne moraju ništa da menjaju.
+
 ## 0.4.0
 - `ngfw.tree` — `TreeEditor`, stablo koje se menja direktno u prikazu, kao NiceGUI element za bilo koju
   stranicu (iz aplikacije stabla); `JsonFileStore` / `MemoryStore` / sopstveni `TreeStore`; takođe kao

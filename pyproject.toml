@@ -17,6 +17,12 @@ dependencies = [
 # ngfw.webdav — uređivanje fajlova (Word šablona) direktno iz desktop Worda
 webdav = ["wsgidav>=4.3", "a2wsgi>=1.10", "docxtpl>=0.16"]
 
+[project.scripts]
+ngfw-demo = "ngfw.demo:main"
+
+[project.urls]
+Homepage = "https://github.com/milanpopovic/ngfw"
+
 [tool.setuptools]
 packages = ["ngfw", "ngfw.auth", "ngfw.components", "ngfw.pages", "ngfw.tree"]
 
